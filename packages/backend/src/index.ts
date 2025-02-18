@@ -13,19 +13,19 @@ app.disable('x-powered-by');
 
 // Setup CORS (Cross-Origin Resource Sharing)
 // Must include an array of URLs called 'origin', which are the URLS that are permitted to send requests to the API
-// app.use(cors({
-//   credentials: true,
-//   origin: ["http://localhost:3000"]
-// }));
+app.use(cors({
+  credentials: true,
+  origin: ["http://localhost:3000"]
+}));
 
 // Allow the api use and parse JSON with Express.js
 app.use(express.json());
 
 // Allow CORS for the API to allow for credentials to be based in the requests
-// app.all("/*", function(req, res, next) {
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
+app.all("/*", function(req, res, next) {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 // TODO: App routers use statements
 
