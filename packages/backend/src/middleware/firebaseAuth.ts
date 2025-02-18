@@ -1,13 +1,4 @@
-import admin from "firebase-admin";
 import { Request, Response, NextFunction } from "express";
-
-// Initialize Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT as string);
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
 
 // Middleware to Verify Firebase Token
 const verifyFirebaseToken = async (req: Request, res: Response, next: NextFunction) => {
