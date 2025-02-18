@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "yarn": "^1.22.22"
+  },
+  "name": "journal-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/camlink7/journal-app.git",
+  "author": "Camden <camdenlink7@gmail.com>",
+  "license": "MIT", 
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev": "concurrently \"yarn workspace frontend start\" \"yarn workspace backend start\""
+  }, 
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
