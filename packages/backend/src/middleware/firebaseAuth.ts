@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import admin from "./firebaseAdmin";
 
 // Middleware to Verify Firebase Token
-const verifyFirebaseToken = async (req: Request, res: Response, next: NextFunction) => {
+const verifyFirebaseToken = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const authHeader = req.headers.authorization;
   
     if (!authHeader || !authHeader.startsWith("Bearer ")) {

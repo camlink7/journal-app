@@ -6,6 +6,7 @@
     "target": "ES2020",
     "strict": true,
     "esModuleInterop": true, // This allows default imports for CommonJS modules
-    "skipLibCheck": true // Optional: speeds up compilation by skipping type checking for declaration files
+    "skipLibCheck": true, // Optional: speeds up compilation by skipping type checking for declaration files
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
   }
 }
