@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = void 0;
 const mysql2_1 = require("mysql2"); // do not use 'mysql2/promises'!
 const kysely_1 = require("kysely");
-console.log("hi");
 const dialect = new kysely_1.MysqlDialect({
     pool: (0, mysql2_1.createPool)({
         database: process.env.DB_NAME,

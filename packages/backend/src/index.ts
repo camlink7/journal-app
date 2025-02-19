@@ -1,7 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import verifyFirebaseToken from "./middleware/firebaseAuth";
+import { Router, Request, Response } from "express";
 const cors = require("cors");
+
+// Router imports
+import userRouter from "./routers/userRouter";
 
 // Load env variables
 dotenv.config();
@@ -28,6 +32,8 @@ app.all("/*", function(req, res, next) {
 });
 
 // TODO: App routers use statements
+app.use("/users", userRouter)
+
 
 // The highest level "catch-all" error handling to prevent the API from crashing all together.
 app.use((err: any, req: any, res: any, next: any) => {

@@ -7,7 +7,7 @@ import {
 } from 'kysely';
 
 export interface Database {
-    user: UserTable
+    User: UserTable
 };
 
 // User Table
