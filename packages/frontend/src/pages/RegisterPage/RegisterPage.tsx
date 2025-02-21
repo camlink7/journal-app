@@ -19,7 +19,12 @@ export default function RegisterPage(){
 
     // Password States
     const validatePasswords = () => {
-
+        if (password !== confirmPassword && password.length > 0 && confirmPassword.length > 0){
+            setError("Passwords must match!");
+        }
+        else {
+            setError("");
+        }
     }
 
     const [password, setPassword] = useState<string>("");
@@ -37,12 +42,12 @@ export default function RegisterPage(){
                     <h1 className="text-3xl mb-12">Journal App</h1>
                     <form onSubmit={handleSubmit} className="card w-80 lg:w-96 bg-base-200 shadow-xl"> {/* Slightly lighter than base */}
                     <div className="card-body">
-                        <div className="my-5">
-                            { error &&
+                        { error &&
+                            <div className="my-5">    
                                 <Alert type="error" message={error}/>
-                            }
-                            
-                        </div>
+                            </div> 
+                        }
+                        
 
                         <h2 className="card-title">Register</h2>
                         <div className="form-control">
