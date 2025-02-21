@@ -9,7 +9,12 @@
   "author": "Camden <camdenlink7@gmail.com>",
   "license": "MIT", 
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": {
+    "packages": [
+      "packages/frontend",
+      "packages/backend"
+    ]
+  },
   "scripts": {
     "dev": "concurrently \"yarn workspace frontend start\" \"yarn workspace backend start\""
   }, 
