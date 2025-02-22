@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage/LoginPage"
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./FirebaseAuth";
+import JournalPage from "../pages/JournalPage/JournalPage";
 
 export default function AppRouter(){
 
@@ -25,11 +26,11 @@ export default function AppRouter(){
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="*" element={<NotFound/>}/>
 
-                    {/* Test Secure Route */}
-                    <Route path="/secure"
+                    {/* Protected journal route */}
+                    <Route path="/journal"
                         element={
                             <ProtectedRoute>
-                                <h1>Very Secure Page</h1>
+                                <JournalPage/>
                             </ProtectedRoute>}>
                     </Route>
                 </Routes>
