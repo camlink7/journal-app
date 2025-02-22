@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage"
 import LoginPage from "../pages/LoginPage/LoginPage"
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./FirebaseAuth";
 
 export default function AppRouter(){
 
@@ -16,12 +18,23 @@ export default function AppRouter(){
 
     return (
         <Router>
-            <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="*" element={<NotFound/>}/>
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+
+                    {/* Test Secure Route */}
+                    <Route path="/secure"
+                        element={
+                            <ProtectedRoute>
+                                <h1>Very Secure Page</h1>
+                            </ProtectedRoute>}>
+                    </Route>
+                </Routes>
+            </AuthProvider>
+            
         </Router>
     );
 }

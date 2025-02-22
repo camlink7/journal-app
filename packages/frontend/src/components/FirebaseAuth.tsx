@@ -1,32 +1,37 @@
-import React, { useEffect, useRef } from "react";
-import { getAuth } from "firebase/auth";
+import React, { useState, useContext, createContext, useEffect, ReactNode } from "react";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import firebaseConfig from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const FirebaseAuth = () => {
-    const uiRef = useRef<firebaseui.auth.AuthUI | null>(null);
+interface AuthContextType {
+  user: User | null;
+  loadingAuth: boolean;
+}
+
+const AuthContext = createContext<AuthContextType>({user: null, loadingAuth: true});
+
+export const AuthProvider = ({children}: {children: ReactNode}) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!uiRef.current) {
-      const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
-      ui.start("#firebaseui-auth-container", {
-        signInOptions: [
-          "password",
-        ],
-        signInSuccessUrl: "/", // Redirect after successful login
-      });
+    const unsubcribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoadingAuth(false);
+    });
 
-      uiRef.current = ui;
-    }
+    return () => unsubcribe();
   }, []);
 
-  return <div id="firebaseui-auth-container"></div>;
-};
+  return <AuthContext.Provider value={{user, loadingAuth}}>{children}</AuthContext.Provider>;
+}
 
-export default FirebaseAuth;
+export const useAuth = () => useContext(AuthContext);
