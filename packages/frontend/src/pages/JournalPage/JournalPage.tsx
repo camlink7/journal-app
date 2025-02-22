@@ -83,9 +83,35 @@ export default function JournalPage(){
                             exit={{ opacity: 0, x: -100 }}
                             transition={{ duration: 0.4 }}>
                             <div className="active-journal-container block items-stretch transition transition-all">
-                                <div className="active-journal-container-grid grid grid-rows-[1fr_6fr]">
-                                    <div className="flex justify-center items-center bg-base-200">
-                                        <p>Active Journal Header</p>
+                                <div className="active-journal-container-grid grid grid-rows-[1fr_6fr] grid-cols-[1fr-3fr-1fr]">
+                                    <div className="grid grid-rows-[2fr_1fr] items-center bg-base-200 ">
+
+                                        <div className="flex items-center w-full px-3 border-b-2 border-neutral-700 h-full">
+                                            <button onClick={(e) => setSelectedEntry(null) } className="ml-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-circle-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a10 10 0 0 1 .324 19.995l-.324 .005l-.324 -.005a10 10 0 0 1 .324 -19.995zm.707 5.293a1 1 0 0 0 -1.414 0l-4 4a1.048 1.048 0 0 0 -.083 .094l-.064 .092l-.052 .098l-.044 .11l-.03 .112l-.017 .126l-.003 .075l.004 .09l.007 .058l.025 .118l.035 .105l.054 .113l.043 .07l.071 .095l.054 .058l4 4l.094 .083a1 1 0 0 0 1.32 -1.497l-2.292 -2.293h5.585l.117 -.007a1 1 0 0 0 -.117 -1.993h-5.586l2.293 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32z" /></svg>
+                                            </button>
+
+                                            <div className="w-full text-left mx-5">
+                                                <h1 className="font-bold text-2xl">Worse Day Ever</h1>
+                                                <p>
+                                                    <span className="font-bold">Thursday, Feb. 13 </span>
+                                                    <span>at 8:50 pm</span>
+                                                </p>
+                                            </div>
+
+                                            <button className="mr-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                            </button>    
+                                        </div>
+                                        
+                                        <div className="flex justify-center items-center overflow-x-scroll">
+                                            <div className="tag-pill rounded-full px-3 bg-blue-800 mx-2 text-lg">
+                                                <p>Terrible</p>
+                                            </div>
+                                            <div className="tag-pill rounded-full px-3 bg-green-800 mx-2 text-lg">
+                                                <p>Calculus</p>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="min-h-screen journal-entry-zone flex justify-center
