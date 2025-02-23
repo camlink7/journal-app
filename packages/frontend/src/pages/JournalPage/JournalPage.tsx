@@ -4,6 +4,7 @@ import JournalEntryCard from "./components/JournalEntryCard/JournalEntryCard";
 import { isMobile } from "react-device-detect";
 import { motion, AnimatePresence } from "framer-motion";
 import { JournalEntry } from "journal-shared";
+import TimestampDisplay from "../../components/TimestampDisplay";
 
 export default function JournalPage(){
 
@@ -17,7 +18,7 @@ export default function JournalPage(){
         {
             entry_id: "test2", 
             title: "The Best Day!", 
-            last_updated_unix: 1740191795,
+            last_updated_unix: 1740290799,
             tags: ["Coding"]
         }
     ]
@@ -41,8 +42,15 @@ export default function JournalPage(){
 
     // Add Tag to Entry
     const [newEntryTag, setNewEntryTag] = useState<string>("");
-    const addTagToEntry = (entryId: string) => {
-        
+    const addTagToEntry = () => {
+        if (!selectedEntry) {onAddTagModalClose(); return;}
+        if (!newEntryTag) {onAddTagModalClose(); return;}
+
+       let updatedEntry = selectedEntry;
+       updatedEntry.tags.push(newEntryTag);
+       setSelectedEntry(updatedEntry);
+
+        onAddTagModalClose();
     }
 
     const onAddTagModalClose = () => {
@@ -54,12 +62,15 @@ export default function JournalPage(){
             <dialog id="add-tag-modal" className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg mb-3">Add Entry Tag</h3>
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Type here" 
+                        className="input input-bordered w-full max-w-xs"
+                        value={newEntryTag}
+                        onChange={(e) => setNewEntryTag(e.target.value)}/>
                     <div className="modal-action">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn mx-2">Cancel</button>
-                        <button className="btn mx-2">&nbsp;Add&nbsp;</button>
+                        <button className="btn mx-2" onClick={(e) => addTagToEntry()}>&nbsp;Add&nbsp;</button>
                     </form>
                     </div>
                 </div>
@@ -87,17 +98,61 @@ export default function JournalPage(){
                         </div>
                     </div>
                     <div className="active-journal-container block items-stretch">
-                        <div className="active-journal-container-grid grid grid-rows-[1fr_6fr]">
-                            <div className="flex justify-center items-center bg-base-200">
-                                <p>Active Journal Header</p>
-                            </div>
+                        {selectedEntry && 
 
-                            <div className="min-h-screen journal-entry-zone flex justify-center
-                                items-center">
-                                <p>Journal Entry Field</p>
+                        <motion.div key="activeEntryHeader"
+                        initial={{ opacity: 0, y: -100 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 100 }}
+                        transition={{ duration: 0.4 }}>
+                            <div className="active-journal-container-grid grid grid-rows-[1fr_6fr] grid-cols-[1fr-3fr-1fr]">
+                                <div className="grid grid-rows-[2fr_1fr] items-center bg-base-200">
+
+                                    <div className="flex items-center w-full px-3 border-b-2 border-neutral-700 h-full">
+    
+                                        <div className="w-full text-left mx-5">
+                                            <h1 className="font-bold text-2xl">{selectedEntry.title}</h1>
+                                            <p>
+                                                <TimestampDisplay timestamp={selectedEntry.last_updated_unix}/>
+                                            </p>
+                                        </div>
+
+                                        <button className="mr-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                        </button>    
+                                    </div>
+                                    
+                                    <div className="flex justify-start items-center overflow-x-scroll">
+                                        <button className="flex tag-pill rounded-full px-3 mx-2 text-lg border-dashed border"
+                                            onClick={(e) => {
+                                                let elem = document.getElementById('add-tag-modal');
+                                                if (elem instanceof HTMLDialogElement){
+                                                    elem.showModal();
+                                                }
+                                            }}>
+                                            &nbsp;
+                                            &nbsp;
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="30"  height="30s"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                            &nbsp;
+                                            &nbsp;
+                                        </button>
+                                        { selectedEntry.tags.map((tag) => {
+                                            return(
+                                                <div className="tag-pill rounded-full px-3 bg-blue-800 mx-2 text-lg">
+                                                    <p>{tag}</p>
+                                                </div>)
+                                            })
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className="min-h-screen journal-entry-zone flex justify-center
+                                    items-center">
+                                        
+                                </div>
                             </div>
-                        </div>
-                        
+                        </motion.div>
+                        }
                     </div>
 
                     {/* <div className="profile-side-container flex justify-center items-center bg-base-200">
@@ -127,10 +182,9 @@ export default function JournalPage(){
                                             </button>
 
                                             <div className="w-full text-left mx-5">
-                                                <h1 className="font-bold text-2xl">Worse Day Ever</h1>
+                                                <h1 className="font-bold text-2xl">{selectedEntry.title}</h1>
                                                 <p>
-                                                    <span className="font-bold">Thursday, Feb. 13 </span>
-                                                    <span>at 8:50 pm</span>
+                                                    <TimestampDisplay timestamp={selectedEntry.last_updated_unix}/>
                                                 </p>
                                             </div>
 
@@ -139,7 +193,7 @@ export default function JournalPage(){
                                             </button>    
                                         </div>
                                         
-                                        <div className="flex justify-center items-center overflow-x-scroll">
+                                        <div className="flex justify-start items-center overflow-x-scroll text-nowrap">
                                             <button className="flex tag-pill rounded-full px-3 mx-2 text-lg border-dashed border"
                                                 onClick={(e) => {
                                                     let elem = document.getElementById('add-tag-modal');
@@ -153,12 +207,13 @@ export default function JournalPage(){
                                                 &nbsp;
                                                 &nbsp;
                                             </button>
-                                            <div className="tag-pill rounded-full px-3 bg-blue-800 mx-2 text-lg">
-                                                <p>Terrible</p>
-                                            </div>
-                                            <div className="tag-pill rounded-full px-3 bg-green-800 mx-2 text-lg">
-                                                <p>Calculus</p>
-                                            </div>
+                                            { selectedEntry.tags.map((tag) => {
+                                                return(
+                                                    <div className="tag-pill rounded-full px-3 bg-blue-800 mx-2 text-lg">
+                                                        <p>{tag}</p>
+                                                    </div>)
+                                                })
+                                            }
                                         </div>
                                     </div>
 

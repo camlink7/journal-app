@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import "./JournalEntryCard.css";
 import { JournalEntry } from "journal-shared";
 import { isMobile } from "react-device-detect"; 
+import TimestampDisplay from "../../../../components/TimestampDisplay";
 
 interface JournalEntryCardProps {
     entryData: JournalEntry,
@@ -30,7 +31,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = ({entryData, onClickHa
             onClick={() => onClickHandler(entryData)}>
 
         <h1 className="text-xl font-bold my-2">{entryData.title}</h1>
-        <p>{new Date(Number(entryData.last_updated_unix) * 1000).toLocaleString()}</p>
+        <TimestampDisplay timestamp={Number(entryData.last_updated_unix)}/>
         <div className="flex my-3">
             {entryData.tags.map((tag: string) => {
                 return (<div className="entry-tag bg-blue-800 mr-2 px-2 rounded-full">
