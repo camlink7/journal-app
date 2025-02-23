@@ -3,10 +3,24 @@ import "./JournalPage.css";
 import JournalEntryCard from "./components/JournalEntryCard/JournalEntryCard";
 import { isMobile } from "react-device-detect";
 import { motion, AnimatePresence } from "framer-motion";
+import { JournalEntry } from "journal-shared";
 
 export default function JournalPage(){
 
-    const keys = ["123f", "f3a", "fab"];
+    const entries = [
+        {
+            entry_id: "test", 
+            title: "The Worst Day!", 
+            last_updated_unix: 1740191795,
+            tags: ["Calculus", "Bad Day"]
+        },
+        {
+            entry_id: "test2", 
+            title: "The Best Day!", 
+            last_updated_unix: 1740191795,
+            tags: ["Coding"]
+        }
+    ]
 
     // Mobile Responsiveness
     const [mobile, setMobile] = useState(isMobile);
@@ -20,9 +34,9 @@ export default function JournalPage(){
     }, []);
 
     // Entry Selection
-    const [selectedEntry, setSelectedEntry] = useState<string | null>(null);
-    const handleSelectEntry = ((entryId: string) => {
-        setSelectedEntry(entryId);
+    const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
+    const handleSelectEntry = ((entry: JournalEntry) => {
+        setSelectedEntry(entry);
     })
 
     // Add Tag to Entry
@@ -63,14 +77,10 @@ export default function JournalPage(){
                                 <h1 className="text-3xl">Journal Entries</h1>
                             </div>
                             <div className="w-full max-h-screen overflow-y-scroll ">
-                                { keys.map((key) => {
-                                        return <JournalEntryCard key={key} entryData={{
-                                            entry_id: key,
-                                            title: "The Worst Day!",
-                                            last_updated_unix: 1740191795,
-                                            tags: ["Unfortunate", "Statistics", "Bad"]
-                                        }
-                                        } onClickHandler={handleSelectEntry} selected={selectedEntry === key}/>
+                                { entries.map((entry) => {
+                                        return <JournalEntryCard key={entry.entry_id} entryData={entry}
+                                        onClickHandler={handleSelectEntry} 
+                                        selected={selectedEntry?.entry_id === entry.entry_id}/>
                                     })
                                 }
                             </div>
@@ -177,14 +187,10 @@ export default function JournalPage(){
                                         <h1 className="text-3xl">Journal Entries</h1>
                                     </div>
                                     <div className="w-full max-h-screen overflow-y-scroll ">
-                                        { keys.map((key) => {
-                                                return <JournalEntryCard key={key} entryData={{
-                                                    entry_id: key,
-                                                    title: "The Worst Day!",
-                                                    last_updated_unix: 1740191795,
-                                                    tags: ["Unfortunate", "Statistics", "Bad"]
-                                                }
-                                                } onClickHandler={handleSelectEntry} selected={selectedEntry === key}/>
+                                        { entries.map((entry) => {
+                                                return <JournalEntryCard key={entry.entry_id} entryData={entry}
+                                                 onClickHandler={handleSelectEntry} 
+                                                 selected={false}/>
                                             })
                                         }
                                     </div>
