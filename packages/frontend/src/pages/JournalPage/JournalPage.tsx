@@ -25,8 +25,33 @@ export default function JournalPage(){
         setSelectedEntry(entryId);
     })
 
+    // Add Tag to Entry
+    const [newEntryTag, setNewEntryTag] = useState<string>("");
+    const addTagToEntry = (entryId: string) => {
+        
+    }
+
+    const onAddTagModalClose = () => {
+        setNewEntryTag("");
+    }
+
     return (
         <>
+            <dialog id="add-tag-modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg mb-3">Add Entry Tag</h3>
+                    <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                    <div className="modal-action">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn mx-2">Cancel</button>
+                        <button className="btn mx-2">&nbsp;Add&nbsp;</button>
+                    </form>
+                    </div>
+                </div>
+            </dialog>
+        
+
             { (!mobile) ?
                 (<div className="journal-page-grid grid grid-cols-[3fr_10fr] 
                     w-full">
@@ -105,6 +130,19 @@ export default function JournalPage(){
                                         </div>
                                         
                                         <div className="flex justify-center items-center overflow-x-scroll">
+                                            <button className="flex tag-pill rounded-full px-3 mx-2 text-lg border-dashed border"
+                                                onClick={(e) => {
+                                                    let elem = document.getElementById('add-tag-modal');
+                                                    if (elem instanceof HTMLDialogElement){
+                                                        elem.showModal();
+                                                    }
+                                                }}>
+                                                &nbsp;
+                                                &nbsp;
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="30"  height="30s"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                &nbsp;
+                                                &nbsp;
+                                            </button>
                                             <div className="tag-pill rounded-full px-3 bg-blue-800 mx-2 text-lg">
                                                 <p>Terrible</p>
                                             </div>

@@ -12,7 +12,8 @@
   "workspaces": {
     "packages": [
       "packages/frontend",
-      "packages/backend"
+      "packages/backend",
+      "packages/journal-shared"
     ]
   },
   "scripts": {

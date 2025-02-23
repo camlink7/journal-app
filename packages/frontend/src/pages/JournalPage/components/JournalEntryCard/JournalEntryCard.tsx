@@ -1,11 +1,13 @@
 import React from "react";
 import "./JournalEntryCard.css";
-
+import { JournalEntry } from "journal-shared";
+ 
 interface JournalEntryCardProps {
-    entryData: {entry_id: string, title: string, last_updated_unix: string | number, tags: Array<string>},
+    entryData: JournalEntry,
     onClickHandler: (entryId: string) => void,
     selected?: boolean
 }
+
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = ({entryData, onClickHandler, selected = false}) => {
 
