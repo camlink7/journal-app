@@ -6,6 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { JournalEntry } from "journal-shared";
 import TimestampDisplay from "../../components/TimestampDisplay";
 
+// TypeScript users only add this code
+import { createEditor, Descendant } from 'slate'
+import { Editable, Slate, withReact } from 'slate-react'
+
+
 export default function JournalPage(){
 
     const entries = [
@@ -56,6 +61,15 @@ export default function JournalPage(){
     const onAddTagModalClose = () => {
         setNewEntryTag("");
     }
+
+    // Slate Text Editor
+    const [editor] = useState(() => withReact(createEditor()));
+    const initialSlateValue: Descendant[] = [
+        {
+          type: 'paragraph',
+          children: [{ text: 'A line of text in a paragraph.' }],
+        },
+      ]
 
     return (
         <>
@@ -148,7 +162,9 @@ export default function JournalPage(){
 
                                 <div className="min-h-screen journal-entry-zone flex justify-center
                                     items-center">
-                                        
+                                        <Slate editor={editor} initialValue={initialSlateValue}>
+                                            <Editable className="w-full h-full"></Editable>
+                                        </Slate>
                                 </div>
                             </div>
                         </motion.div>
