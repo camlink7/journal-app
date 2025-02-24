@@ -105,8 +105,8 @@ export default function JournalPage(){
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 100 }}
                         transition={{ duration: 0.4 }}>
-                            <div className="active-journal-container-grid grid grid-rows-[1fr_6fr] grid-cols-[1fr-3fr-1fr]">
-                                <div className="grid grid-rows-[2fr_1fr] items-center bg-base-200">
+                            <div className="active-journal-container-grid grid grid-rows-[1fr_7fr] grid-cols-[1fr-3fr-1fr]">
+                                <div className="grid grid-rows-2 items-center bg-base-200">
 
                                     <div className="flex items-center w-full px-3 border-b-2 border-neutral-700 h-full">
     
@@ -122,7 +122,7 @@ export default function JournalPage(){
                                         </button>    
                                     </div>
                                     
-                                    <div className="flex justify-start items-center overflow-x-scroll">
+                                    <div className="flex justify-start items-center overflow-x-scroll p-4">
                                         <button className="flex tag-pill rounded-full px-3 mx-2 text-lg border-dashed border"
                                             onClick={(e) => {
                                                 let elem = document.getElementById('add-tag-modal');
