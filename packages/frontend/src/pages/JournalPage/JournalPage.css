@@ -1,0 +1,17 @@
+.ql-toolbar.ql-snow {
+    /*background-color: #635a5a !important; /* Darker toolbar */
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
+    filter: brightness(1.5) !important;
+    backdrop-filter: brightness(0.75);
+}
+  
+.ql-container {
+   /* background-color: #1f1c1c !important; /* Darker text area */
+   
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+}
+  

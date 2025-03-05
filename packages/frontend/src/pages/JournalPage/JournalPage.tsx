@@ -6,9 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { JournalEntry } from "journal-shared";
 import TimestampDisplay from "../../components/TimestampDisplay";
 
-// TypeScript users only add this code
-import { createEditor, Descendant } from 'slate'
-import { Editable, Slate, withReact } from 'slate-react'
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 
 export default function JournalPage(){
@@ -62,14 +61,12 @@ export default function JournalPage(){
         setNewEntryTag("");
     }
 
-    // Slate Text Editor
-    const [editor] = useState(() => withReact(createEditor()));
-    const initialSlateValue: Descendant[] = [
-        {
-          type: 'paragraph',
-          children: [{ text: 'A line of text in a paragraph.' }],
-        },
-      ]
+    // Quill text editor
+    const [quillValue, setQuillValue] = useState('');
+
+    useEffect(() => {
+        console.log(quillValue);
+    }, [quillValue]);
 
     return (
         <>
@@ -162,9 +159,8 @@ export default function JournalPage(){
 
                                 <div className="min-h-screen journal-entry-zone flex justify-center
                                     items-center">
-                                        <Slate editor={editor} initialValue={initialSlateValue}>
-                                            <Editable className="w-full h-full"></Editable>
-                                        </Slate>
+                                       <ReactQuill theme="snow" value={quillValue} onChange={setQuillValue} 
+                                        className="w-full h-full"/>;
                                 </div>
                             </div>
                         </motion.div>
