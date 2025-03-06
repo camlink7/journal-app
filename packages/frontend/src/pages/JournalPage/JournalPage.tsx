@@ -15,13 +15,15 @@ export default function JournalPage(){
     const entries = [
         {
             entry_id: "test", 
-            title: "The Worst Day!", 
+            title: "The Worst Day!",
+            content: "",
             last_updated_unix: 1740191795,
             tags: ["Calculus", "Bad Day"]
         },
         {
             entry_id: "test2", 
-            title: "The Best Day!", 
+            title: "The Best Day!",
+            content: "",
             last_updated_unix: 1740290799,
             tags: ["Coding"]
         }
@@ -62,7 +64,12 @@ export default function JournalPage(){
     }
 
     // Quill text editor
-    const [quillValue, setQuillValue] = useState('');
+    const [quillValue, setQuillValue] = useState("");
+
+    // on new journal entry selection, update the quill content
+    useEffect(() => {
+        setQuillValue(selectedEntry?.content || "");
+    }, [selectedEntry]);
 
     return (
         <>

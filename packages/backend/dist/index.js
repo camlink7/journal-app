@@ -9,6 +9,7 @@ const firebaseAuth_1 = __importDefault(require("./middleware/firebaseAuth"));
 const cors = require("cors");
 // Router imports
 const userRouter_1 = __importDefault(require("./routers/userRouter"));
+const journalEntryRouter_1 = __importDefault(require("./routers/journalEntryRouter"));
 // Load env variables
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -27,8 +28,9 @@ app.all("/*", function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-// TODO: App routers use statements
+// App routers use statements
 app.use("/users", userRouter_1.default);
+app.use("/entries", journalEntryRouter_1.default);
 // The highest level "catch-all" error handling to prevent the API from crashing all together.
 app.use((err, req, res, next) => {
     console.error(err.stack);

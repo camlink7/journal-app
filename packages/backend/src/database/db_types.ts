@@ -7,7 +7,8 @@ import {
 } from 'kysely';
 
 export interface Database {
-    User: UserTable
+    User: UserTable,
+    JournalEntry: JournalEntryTable
 };
 
 // User Table
@@ -17,6 +18,18 @@ export interface UserTable {
     nickname: string | null
     created_at_timestamp: ColumnType<Date, string | undefined, never>
 };
-export type User = Selectable<UserTable>;
-export type NewUser = Insertable<UserTable>;
-export type UserUpdate = Updateable<UserTable>;
+export type DB_User = Selectable<UserTable>;
+export type DB_NewUser = Insertable<UserTable>;
+export type DB_UserUpdate = Updateable<UserTable>;
+
+// Journal Entry Table
+export interface JournalEntryTable {
+    entry_id: Generated<string>
+    title: string | null
+    content: string
+    last_updated_unix: ColumnType<string | undefined, never>
+    tags: string | null
+}
+export type DB_JournalEntry = Selectable<JournalEntryTable>;
+export type DB_NewJournalEntry = Insertable<JournalEntryTable>;
+export type DB_JournalEntryUpdate = Updateable<JournalEntryTable>;

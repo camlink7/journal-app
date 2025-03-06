@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // Router imports
 import userRouter from "./routers/userRouter";
+import journalEntryRouter from "./routers/journalEntryRouter";
 
 // Load env variables
 dotenv.config();
@@ -31,8 +32,9 @@ app.all("/*", function(req, res, next) {
   next();
 });
 
-// TODO: App routers use statements
-app.use("/users", userRouter)
+// App routers use statements
+app.use("/users", userRouter);
+app.use("/entries", journalEntryRouter);
 
 
 // The highest level "catch-all" error handling to prevent the API from crashing all together.

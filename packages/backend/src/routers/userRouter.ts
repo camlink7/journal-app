@@ -3,7 +3,7 @@ import admin from "../middleware/firebaseAdmin";
 import verifyFirebaseToken from "../middleware/firebaseAuth";
 import { getMySQLDateTime } from "../utils/utils";
 
-import { NewUser } from "../database/db_types";
+import { DB_NewUser } from "../database/db_types";
 
 import { registerNewUser } from "../controllers/userController";
 
@@ -27,7 +27,7 @@ router.post("/register", async (req: Request, res: Response): Promise<any> => {
         });
 
         // Create a new user record in our DB
-        const newUser: NewUser = {
+        const newUser: DB_NewUser = {
             uid: userRecord.uid,
             email,
             nickname: nickname ?? null,
