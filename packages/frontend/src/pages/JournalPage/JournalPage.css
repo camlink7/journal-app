@@ -15,3 +15,15 @@
     border: none !important;
 }
   
+
+.ql-editor {
+    font-size: 20px; /* Adjust as needed */
+}
+
+.ql-toolbar {
+    position: relative; /* Ensures the toolbar is not clipping */
+    z-index: 10;
+}
+
+  
+  

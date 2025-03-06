@@ -64,10 +64,6 @@ export default function JournalPage(){
     // Quill text editor
     const [quillValue, setQuillValue] = useState('');
 
-    useEffect(() => {
-        console.log(quillValue);
-    }, [quillValue]);
-
     return (
         <>
             <dialog id="add-tag-modal" className="modal">
@@ -231,7 +227,8 @@ export default function JournalPage(){
 
                                     <div className="min-h-screen journal-entry-zone flex justify-center
                                         items-center">
-                                        <p>Journal Entry Field</p>
+                                        <ReactQuill theme="snow" value={quillValue} onChange={setQuillValue} 
+                                        className="w-full h-full"/>;
                                     </div>
                                 </div>
                             </div>
