@@ -50,6 +50,7 @@ app.get("/status", (req, res) => {
 
 // Endpoint to determine the status of the API with a protected route
 app.get("/securestatus", verifyFirebaseToken, (req, res) => {
+  console.log(req.user?.uid);
   res.status(200).json({message: "Authentication successful!", status: "OK"});
 });
 

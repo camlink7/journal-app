@@ -24,6 +24,7 @@ export type DB_UserUpdate = Updateable<UserTable>;
 
 // Journal Entry Table
 export interface JournalEntryTable {
+    owner_uid: string,
     entry_id: Generated<string>
     title: string | null
     content: string

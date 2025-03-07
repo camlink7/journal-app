@@ -1,31 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createNewJournalEntry = createNewJournalEntry;
+const database_1 = require("../database/database");
 const utils_1 = require("../utils/utils");
 const uuid_1 = require("uuid");
-async function createNewJournalEntry(content, title, tags) {
-    // Parse and prepare tags CSV string
-    let tags_csv = "";
-    let tags_split = tags.trim().split(",");
-    for (let i = 0; i < tags_split.length; i++) {
-        tags_csv += tags_split[i].trim();
-        if (i != tags_split.length - 1) {
-            tags_csv += ",";
-        }
+async function createNewJournalEntry(uid, content, title, tags) {
+    content = content?.trim() ?? "";
+    title = title?.trim() ?? "";
+    if (!tags) {
+        tags = [];
     }
-    // Prepare and create database object
-    const entry = {
-        entry_id: (0, uuid_1.v4)(),
-        title: title.trim(),
+    // Default for title
+    if (title.length <= 0) {
+        title = "New Entry";
+    }
+    // Remove duplicate tags
+    let tagSet = [...new Set(tags)];
+    // Convert the tag set array into a CSV string
+    let tagCsvString = tagSet.join(",");
+    // Create a new user record in our DB
+    const newEntry = {
+        owner_uid: uid,
+        entry_id: (0, uuid_1.v4)().toString(),
         content,
+        title,
         last_updated_unix: (0, utils_1.getMySQLDateTime)(),
-        tags: tags_csv
+        tags: tagCsvString
     };
-    //const result = await db
-    // .insertInto("User")
-    // .values({
-    //     ...user,
-    //     created_at_timestamp: getMySQLDateTime() // Ensure timestamp is set
-    // })
-    // .executeTakeFirst();
+    const result = await database_1.db
+        .insertInto("JournalEntry")
+        .values(newEntry)
+        .executeTakeFirst();
+    return newEntry;
 }

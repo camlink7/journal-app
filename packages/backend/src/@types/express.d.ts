@@ -6,7 +6,8 @@ import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 declare global {
   namespace Express {
     interface Request {
-      user?: DB_User | DecodedIdToken;
+      user?: DB_User | DecodedIdToken | null;
+      uid?: string | null;
       journalEntry?: JournalEntry;
     }
   }

@@ -3,32 +3,42 @@ import { db } from "../database/database";
 import { DB_JournalEntry, DB_JournalEntryUpdate, DB_NewJournalEntry } from "../database/db_types";
 import { getMySQLDateTime } from "../utils/utils";
 import { v4 as uuidv4 } from "uuid";
+import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 
-export async function createNewJournalEntry(content: string, title: string, tags: string){
+export async function createNewJournalEntry(uid: string, content: string, title: string, tags: string[]): Promise<DB_JournalEntry>{
 
-    // Parse and prepare tags CSV string
-    let tags_csv = "";
-    let tags_split = tags.trim().split(",");
-    for (let i = 0; i < tags_split.length; i++){
-        tags_csv += tags_split[i].trim();
+    content = content?.trim() ?? "";
+    title = title?.trim() ?? "";
+    if (!tags) { tags = []; }
+    
 
-        if (i != tags_split.length - 1){
-            tags_csv += ",";
-        }
+    // Default for title
+    if (title.length <= 0){
+        title = "New Entry";
     }
 
-    // Prepare and create database object
-    const entry: DB_JournalEntry = {
-        entry_id: uuidv4(),
-        title: title.trim(),
+    // Remove duplicate tags
+    let tagSet = [...new Set(tags)];
+
+    // Convert the tag set array into a CSV string
+    let tagCsvString = tagSet.join(",");
+
+    // Create a new user record in our DB
+    const newEntry: DB_JournalEntry = {
+        owner_uid: uid,
+        entry_id: uuidv4().toString(),
         content,
+        title,
         last_updated_unix: getMySQLDateTime(),
-        tags: tags_csv
+        tags: tagCsvString
     }
 
 
     const result = await db
         .insertInto("JournalEntry")
-        .values(entry)
+        .values(newEntry)
         .executeTakeFirst();
+
+
+    return newEntry;
 }

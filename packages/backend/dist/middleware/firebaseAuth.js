@@ -14,6 +14,7 @@ const verifyFirebaseToken = async (req, res, next) => {
     try {
         const decodedToken = await firebaseAdmin_1.default.auth().verifyIdToken(token);
         req.user = decodedToken;
+        req.uid = decodedToken.uid;
         next();
     }
     catch (error) {
